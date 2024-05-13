@@ -1,25 +1,14 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[202]:
-
 
 import pandas as pd
 file_path = r"C:\Users\ogunb\OneDrive\Desktop\Challenge\orders.json"
 df_orders = pd.read_json(file_path, lines=True)
 
-
-# In[201]:
-
-
 file_path = r"C:\Users\ogunb\OneDrive\Desktop\Challenge\products.json"
 df_products = pd.read_json(file_path, lines=True)
 
 
+
 # # 1. Calculate the net sales amount.
-
-# In[187]:
-
 
 def calculate_net_sales_amount(df_orders):
     df_Sales = df_orders[['product_id','price','status']].copy()
@@ -44,11 +33,8 @@ net_sales = calculate_net_sales_amount(df_orders)
 print(f'The net sales amount is: {net_sales}')
 
 
+
 # # 2.Calculate the average net sales price.
-
-# In[188]:
-
-
 def calculate_Average_Net_Salesprice(df_orders):
     df_Sales = df_orders[['product_id','price','status']].copy()
     df_Sales = df_Sales.sort_values('product_id')
@@ -91,9 +77,6 @@ print(f'The Average Net Salesprice is: {Average_Net_Salesprice}')
 
 # # Calculate the gross (total) sales amount
 
-# In[189]:
-
-
 def calculate_Gross_sales_amount(df_orders):
     df_Sales = df_orders[['product_id','price','status']].copy()
     df_Sales = df_Sales.sort_values('product_id')
@@ -108,10 +91,8 @@ Gross_sales = calculate_Gross_sales_amount(df_orders)
 print(f'The gross (total) sales amount is: {Gross_sales}')
 
 
+
 # # Calculate the average gross (total) sales price.
-
-# In[190]:
-
 
 def calculate_Av_Gross_salesprice(df_orders):
     df_Sales = df_orders[['product_id','price','status']].copy()
@@ -138,9 +119,6 @@ print(f"The average gross (total) sales price is:", Last5days_Av_Sales_Amount)
 
 
 # # Determine the average sales amount for the last 5 days of sales. Note that the sales do not have to be over 5 consecutive calendar days.
-
-# In[191]:
-
 
 from datetime import datetime
 
@@ -171,9 +149,6 @@ Last5days_Av_Sales_Amount = calculate_sales(df_orders)
 print(f"The average sales amount for the last 5 days of sales is:", Last5days_Av_Sales_Amount)
 
 
-# In[192]:
-
-
 def calculate_location_sales(df_orders):
     df_Sales = df_orders[['product_id','price','location']].copy()
 
@@ -198,9 +173,6 @@ print(f"Location with Highest Sales:", Highest_Sales_Location)
 
 
 # # In the `orders` dataset, for each `product_id`, calculate the price change (i.e., if the price of the order is increased, you can write `rise`. If the price of the order is decreased, you can write `fall`).
-
-# In[193]:
-
 
 def calculate_price_change(df_orders):
     df_orders['order_date'] = pd.to_datetime(df_orders['order_date']) 
@@ -227,9 +199,6 @@ df_Output.head()
 
 # # Which products were ordered in the same year as their release date?
 
-# In[194]:
-
-
 def process_data(df_orders, df_products):
     df_orders = df_orders.rename(columns={'product_id':'productid'})
     df_merge = pd.merge(df_orders, df_products, on='productid', how='left')
@@ -247,9 +216,6 @@ df_release_Samedate.head()
 
 
 # # Visualize the average price per release year for each location using the most suitable chart
-
-# In[195]:
-
 
 import matplotlib.pyplot as plt
 df_orders = df_orders.rename(columns={'product_id':'productid'})
@@ -273,15 +239,8 @@ plot_average_price_perlocation(df_orders, df_products)
 
 # # Visualize the distribution of weekly gross (total) sales amount. Does the distribution resemble a normal distribution?
 
-# In[203]:
-
-
 file_path = r"C:\Users\ogunb\OneDrive\Desktop\Challenge\orders.json"
 df_orders = pd.read_json(file_path, lines=True)
-
-
-# In[197]:
-
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -314,15 +273,10 @@ def plot_weekly_gross_sales(df_Sales):
 
 df_Sales = process_sales_data(df_orders)
 plot_weekly_gross_sales(df_Sales)
-
-
 # Does the distribution resemble a normal distribution? YES
 
+
 # # Visualize gross (total) sales amount per week and highlight anomalies on the chart.
-
-# In[198]:
-
-
 from scipy.stats import zscore
 
 def plot_weekly_gross_sales(df_Sales, nth_week=4):
@@ -348,11 +302,6 @@ def plot_weekly_gross_sales(df_Sales, nth_week=4):
 df_Sales = process_sales_data(df_orders)
 plot_weekly_gross_sales(df_Sales)
 
-
 # Anomalies are represented with the red points, they are calculated using the z score 2 to -2, which measures the deviations of this points from the mean 
-
-# In[ ]:
-
-
 
 
